@@ -1,0 +1,65 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: platform-helm
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+    - matrix:
+        generators:
+          # Environments
+          - list:
+              elements:
+                - env: dev
+                  cluster: in-cluster
+
+          # Platform components
+          - list:
+              elements:
+                - name: cert-manager
+                  path: platform/cert-manager
+                  namespace: cert-manager
+                  type: platform
+                  owner: platform-team
+                  syncwave: "0"
+                - name: opentelemetry-operator
+                  path: platform/opentelemetry-operator
+                  namespace: monitoring
+                  type: platform
+                  owner: platform-team
+                  syncwave: "0"
+  template:
+    metadata:
+      name: "{{.env}}-{{.name}}"
+      namespace: argocd
+      labels:
+        gitops.taz.dev/env: "{{.env}}"
+        gitops.taz.dev/owner: "{{.owner}}"
+        gitops.taz.dev/type: "{{.type}}"
+        gitops.taz.dev/cluster: "{{.cluster}}"
+        gitops.taz.dev/namespace: "{{.namespace}}"
+      annotations:
+        argocd.argoproj.io/sync-wave: "{{.syncwave}}"
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/Tazmainiandevil/opentelemetry-jaeger-gitops-demo.git
+        path: "{{.path}}"
+        targetRevision: main
+        helm:
+          ignoreMissingValueFiles: true
+          valueFiles:
+            - "{{.path}}/values.yaml"
+            - "../../environments/{{.env}}/values/platform-values.yaml"
+      destination:
+        namespace: "{{.namespace}}"
+        name: "{{.cluster}}"
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true

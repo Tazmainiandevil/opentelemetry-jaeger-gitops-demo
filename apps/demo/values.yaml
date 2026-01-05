@@ -1,0 +1,16 @@
+replicaCount: 1
+
+image:
+  repository: demo-dotnet
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  port: 8080
+
+instrumentation:
+  enabled: true
+  name: auto-dotnet
+  dotnetImage: ghcr.io/open-telemetry/opentelemetry-operator/autoinstrumentation-dotnet:latest
+  exporter:
+    endpoint: http://jaeger-inmemory-instance-collector.monitoring.svc.cluster.local:4318

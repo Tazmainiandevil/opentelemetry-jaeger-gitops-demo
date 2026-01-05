@@ -1,0 +1,4 @@
+opentelemetry-operator:
+  # Basic operator configuration
+  replicaCount: 1
+  
