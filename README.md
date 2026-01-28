@@ -23,15 +23,15 @@ Hands‑on deployment of Jaeger v2 using the OpenTelemetry Collector and GitOps
 
 Part 3 — Auto‑Instrumenting .NET with the OpenTelemetry Operator
 How the Operator injects the .NET auto‑instrumentation agent with zero code changes
-🔗 Coming soon
+🔗 [Read: Part 3](https://codingwithtaz.blog/2026/01/12/part-3-auto-instrumenting-net-with-opentelemetry/)
 
 Part 4 — Building a Scalable, Multi‑Environment GitOps Architecture
 ApplicationSets, sync waves, environment isolation, and repo structure
-🔗 Coming soon
+🔗 [Read: Part 4](https://codingwithtaz.blog/2026/01/19/part-4-building-a-scalable-multi-environment-gitops-architecture-with-argo-cd/)
 
 Part 5 — Troubleshooting, Scaling & Production Hardening
 Real‑world operational guidance for Jaeger v2 and OpenTelemetry
-🔗 Coming soon
+🔗 [Read: Part 5](https://codingwithtaz.blog/2026/01/26/part-5-troubleshooting-scaling-and-production-hardening/)
 
 
 ## 📐 Architecture Overview
